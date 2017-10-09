@@ -1,98 +1,92 @@
 package main.models;
 
-import main.security.models.Authorities;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-public class User implements UserDetails {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @ManyToMany(fetch = FetchType.EAGER)
     Collection<Authorities> authorities;
-    String password;
-    String login;
-    Boolean accountNonExpired;
-    Boolean accountNonLocked;
-    Boolean credentialsNonExpired;
-    Boolean enabled;
 
-    @Autowired
+    private String login;
+
     @Transient
-    BCryptPasswordEncoder passwordEncoder;
+    private String password;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+    private String hash;
+    private String salt;
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+    private int loginFailCount;
 
-    @Override
-    public String getUsername() {
-        return login;
-    }
+    private boolean enabled;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public Collection<Authorities> getAuthorities() {
+        return authorities;
+    }
+
     public void setAuthorities(Collection<Authorities> authorities) {
         this.authorities = authorities;
     }
 
-    public void setPassword(String password) {
-        this.password = passwordEncoder.encode(password);
+    public String getLogin() {
+        return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
     }
 
-    public void setAccountNonExpired(Boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAccountNonLocked(Boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
+    public String getHash() {
+        return hash;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public int getLoginFailCount() {
+        return loginFailCount;
+    }
+
+    public void setLoginFailCount(int loginFailCount) {
+        this.loginFailCount = loginFailCount;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
 }

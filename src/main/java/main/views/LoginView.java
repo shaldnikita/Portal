@@ -13,20 +13,22 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import main.design.LoginDesign;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@SpringView(name = "login")
 @UIScope
-public class LoginView extends LoginDesign implements View {
+@SpringView(name = "loginView")
+public class LoginView extends LoginDesign implements View{
 
     @Autowired
-    DaoAuthenticationProvider daoAuthenticationProvider;
+    AuthenticationProvider authenticationProvider;
 
     public LoginView(){
         label.setValue("Portal");
@@ -41,16 +43,17 @@ public class LoginView extends LoginDesign implements View {
     }
 
     private void authorize(){
-        Authentication auth = new UsernamePasswordAuthenticationToken(login.getValue(),password.getValue());
-        Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
-        SecurityContextHolder.getContext().setAuthentication(authenticated);
 
+        Authentication auth = authenticationProvider.
+                authenticate(new UsernamePasswordAuthenticationToken(login.getValue(),password.getValue()));
 
-        UI.getCurrent().getNavigator().navigateTo(MainView.VIEW_NAME);
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
+        if(SecurityContextHolder.getContext().getAuthentication()!=null)
+            UI.getCurrent().getNavigator().navigateTo("");
     }
+
 }

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@UIScope
+@Scope("prototype")
 public class GoogleFireBaseDao {
     private final static Logger log = LoggerFactory.getLogger(GoogleFireBaseDao.class);
 
