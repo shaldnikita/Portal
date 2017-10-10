@@ -8,10 +8,10 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-
 
 
 @Component
@@ -30,6 +30,7 @@ public class LocalUserAuthenticationProvider implements AuthenticationProvider, 
 
         if (user != null) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password, user.getAuthorities());
+
             return token;
         }
         return null;

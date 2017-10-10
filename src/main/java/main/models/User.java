@@ -1,5 +1,6 @@
 package main.models;
 
+
 import javax.persistence.*;
 import java.util.Collection;
 

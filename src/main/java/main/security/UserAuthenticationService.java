@@ -41,8 +41,6 @@ public class UserAuthenticationService implements Serializable {
             user.setHash(passwdUtil.calculateHash(user));
 
             userRepository.save(user);
-
-
         }
 
         if (user == null || !user.isEnabled() || !passwdUtil.isValidPassword(user, password)) {

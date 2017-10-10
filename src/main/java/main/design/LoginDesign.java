@@ -5,7 +5,7 @@ import com.vaadin.ui.*;
 public class LoginDesign extends VerticalLayout {
 	private FormLayout formLayout = new FormLayout();
 	protected Label label = new Label("Welcome");
-	protected TextField login = new TextField("Login");
+	protected TextField userName = new TextField("Login");
 	protected PasswordField password = new PasswordField("Password");
 	protected Button loginButton = new Button("Login");
 
@@ -22,7 +22,7 @@ public class LoginDesign extends VerticalLayout {
 		label.addStyleName("h2");
 		formLayout.addComponent(label);
 
-		formLayout.addComponent(login);
+		formLayout.addComponent(userName);
 		formLayout.addComponent(password);
 
 		loginButton.addStyleName("primary");
